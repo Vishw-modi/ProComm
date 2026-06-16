@@ -40,7 +40,12 @@ export function ProfessionalismSlider() {
       </div>
       <Slider
         value={formData.professionalism}
-        onValueChange={(val) => setFormField("professionalism", val)}
+        onValueChange={(val) =>
+          setFormField(
+            "professionalism",
+            typeof val === "number" ? val : val[0] ?? formData.professionalism
+          )
+        }
         min={0}
         max={100}
         step={5}

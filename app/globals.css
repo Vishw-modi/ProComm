@@ -53,6 +53,8 @@
    No purple. Clean. Calming. Professional.
    ═══════════════════════════════════════════════════ */
 :root {
+  --font-sans: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --font-geist-mono: "Cascadia Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   --background: oklch(0.985 0.002 90);
   --foreground: oklch(0.18 0.01 260);
   --card: oklch(1 0 0);
