@@ -13,7 +13,7 @@ import { GenerateButton } from "@/components/forms/generate-button";
 
 export function LeftPanel() {
   return (
-    <div className="flex min-h-0 flex-col h-full border-r border-border/40">
+    <div className="flex min-h-0 flex-col h-full lg:border-r border-border/40">
       <div className="px-4 py-3 border-b border-border/40">
         <h2 className="text-sm font-semibold tracking-tight">Input Controls</h2>
         <p className="text-xs text-muted-foreground mt-0.5">

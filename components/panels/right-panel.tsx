@@ -13,7 +13,7 @@ export function RightPanel() {
   const { response, isLoading } = useAppStore();
 
   return (
-    <div className="flex flex-col h-full border-l border-border/40">
+    <div className="flex flex-col h-full lg:border-l border-border/40">
       <div className="px-4 py-3 border-b border-border/40">
         <h2 className="text-sm font-semibold tracking-tight">AI Analysis</h2>
         <p className="text-xs text-muted-foreground mt-0.5">
