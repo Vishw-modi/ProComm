@@ -4,10 +4,12 @@ import { LeftPanel } from "@/components/panels/left-panel";
 import { CenterPanel } from "@/components/panels/center-panel";
 import { RightPanel } from "@/components/panels/right-panel";
 import { KeyboardShortcuts } from "@/components/features/keyboard-shortcuts";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { PenSquare, Sparkles, BarChart3 } from "lucide-react";
+import { useAppStore } from "@/store/use-app-store";
+import { ChevronDown, PenSquare, Sparkles, BarChart3 } from "lucide-react";
 
 export function MainContent() {
+  const { response, isLoading } = useAppStore();
+
   return (
     <>
       <KeyboardShortcuts />
@@ -30,49 +32,64 @@ export function MainContent() {
           </div>
         </div>
 
-        {/* Mobile: tabbed layout */}
-        <div className="lg:hidden flex-1 min-h-0 overflow-hidden">
-          <Tabs defaultValue="input" className="flex h-full min-h-0 flex-col">
-            <div className="border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-              <TabsList
-                variant="line"
-                className="w-full justify-between gap-0 rounded-none px-2 py-2"
-              >
-                <TabsTrigger value="input" className="flex-1">
-                  <PenSquare className="h-3.5 w-3.5" />
-                  <span className="text-xs">Input</span>
-                </TabsTrigger>
-                <TabsTrigger value="output" className="flex-1">
-                  <Sparkles className="h-3.5 w-3.5" />
-                  <span className="text-xs">Output</span>
-                </TabsTrigger>
-                <TabsTrigger value="analysis" className="flex-1">
-                  <BarChart3 className="h-3.5 w-3.5" />
-                  <span className="text-xs">Analysis</span>
-                </TabsTrigger>
-              </TabsList>
+        {/* Mobile: input-first layout with expandable results */}
+        <div className="lg:hidden flex h-full min-h-0 flex-col overflow-auto">
+          <section className="border-b border-border/40">
+            <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+              <div className="flex items-center gap-2 px-4 py-3 border-b border-border/40">
+                <PenSquare className="h-4 w-4 text-teal-500" />
+                <div>
+                  <h2 className="text-sm font-semibold tracking-tight">Input Controls</h2>
+                  <p className="text-xs text-muted-foreground">
+                    Start here to write your message
+                  </p>
+                </div>
+              </div>
+              <div className="h-[72svh] overflow-hidden">
+                <LeftPanel />
+              </div>
             </div>
+          </section>
 
-            <div className="flex-1 min-h-0 overflow-hidden">
-              <TabsContent value="input" className="h-full min-h-0">
-                <div className="h-full overflow-hidden border-b border-border/40">
-                  <LeftPanel />
+          <section className="border-b border-border/40">
+            <details className="group" open={Boolean(response || isLoading)}>
+              <summary className="flex items-center justify-between gap-2 px-4 py-3 list-none cursor-pointer">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="h-4 w-4 text-teal-500" />
+                  <div>
+                    <h2 className="text-sm font-semibold tracking-tight">Generated Output</h2>
+                    <p className="text-xs text-muted-foreground">
+                      View rewritten variants
+                    </p>
+                  </div>
                 </div>
-              </TabsContent>
+                <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform group-open:rotate-180" />
+              </summary>
+              <div className="border-t border-border/40 h-[70svh]">
+                <CenterPanel />
+              </div>
+            </details>
+          </section>
 
-              <TabsContent value="output" className="h-full min-h-0">
-                <div className="h-full overflow-hidden border-b border-border/40">
-                  <CenterPanel />
+          <section>
+            <details className="group">
+              <summary className="flex items-center justify-between gap-2 px-4 py-3 list-none cursor-pointer">
+                <div className="flex items-center gap-2">
+                  <BarChart3 className="h-4 w-4 text-teal-500" />
+                  <div>
+                    <h2 className="text-sm font-semibold tracking-tight">AI Analysis</h2>
+                    <p className="text-xs text-muted-foreground">
+                      Review quality insights
+                    </p>
+                  </div>
                 </div>
-              </TabsContent>
-
-              <TabsContent value="analysis" className="h-full min-h-0">
-                <div className="h-full overflow-hidden">
-                  <RightPanel />
-                </div>
-              </TabsContent>
-            </div>
-          </Tabs>
+                <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform group-open:rotate-180" />
+              </summary>
+              <div className="border-t border-border/40 h-[56svh]">
+                <RightPanel />
+              </div>
+            </details>
+          </section>
         </div>
       </main>
     </>
